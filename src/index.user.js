@@ -39,7 +39,8 @@ if (/\/(mobile\/)?exercises\/detail\//.test(location.pathname)) {
     const ansList = JSON.parse(localStorage.getItem('bot:ansList'))
     console.log(ansList)
     Array.from(document.querySelectorAll('li.item')).forEach((el, i) => {
-      ansList[i].forEach(ans => {
+      const targetAnsItem = ansList[i].stem === el.querySelector('.stem')?.innerText ? ansList[i] : (ansList.find(item => item.stem === el.querySelector('.stem')?.innerText) ?? ansList[i])
+      targetAnsItem.ans.forEach(ans => {
         let clickAns = ans
         if (ans === '正确') { clickAns = 'A' }
         if (ans === '错误') { clickAns = 'B' }
@@ -77,9 +78,10 @@ if (/\/(mobile\/)?exercises\/detail\//.test(location.pathname)) {
 
 if (/\/(mobile\/)?exercises\/report\//.test(location.pathname)) {
   const ansList = []
-  Array.from(document.querySelectorAll('.result_box')).forEach(el => {
-    const list = el.querySelectorAll('span')[0].innerHTML.replace(/(正确答案：)|\s/g, '').split(',')
-    ansList.push(list)
+  Array.from(document.querySelectorAll('li.item')).forEach(el => {
+    const ansItem = { stem: el.querySelector('.stem')?.innerText, ans: [] }
+    ansItem.ans = el.querySelectorAll('.result_box span')[0].innerHTML.replace(/(正确答案：)|\s/g, '').split(',')
+    ansList.push(ansItem)
   })
   const exerciseURL = localStorage.getItem('bot:exerciseURL')
   if (exerciseURL !== null) {
