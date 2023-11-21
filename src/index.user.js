@@ -44,13 +44,13 @@ if (/\/(mobile\/)?exercises\/detail\//.test(location.pathname)) {
         if (ans === '正确') { clickAns = 'A' }
         if (ans === '错误') { clickAns = 'B' }
         console.log(ans, clickAns)
-        el.querySelector(`input[value=${clickAns}]`).click()
+        el.querySelector(`input[value=${clickAns}]`)?.click()
       })
     })
     localStorage.setItem('bot:hasAnswer', 'false')
     setTimeout(() => {
-      // document.querySelector('.submit_btn').click()
-    }, 300)
+      document.querySelector('.submit_btn').click()
+    }, 1000)
   } else {
     window.alert = () => {}
     addStartUI()
@@ -70,7 +70,7 @@ if (/\/(mobile\/)?exercises\/detail\//.test(location.pathname)) {
       setTimeout(() => {
         localStorage.setItem('bot:exerciseURL', location.href)
         document.querySelector('.submit_btn').click()
-      }, 300)
+      }, 1000)
     })
   }
 }
